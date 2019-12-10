@@ -34,7 +34,7 @@ router.post('/', (request, response) => {
     staging: 'https://www.ambacar.ec',
     demo: 'https://www.ambacar.ec'
   };
-
+  const sectores = ['norte', 'centro', 'sur', 'valles'];
   const api = {
       version: 'wp-json/wp/v2',
       per_page: '100'
@@ -50,25 +50,27 @@ router.post('/', (request, response) => {
     const citiesDealerUrl = `${domain.prod}/${api.version}/concesionario?per_page=${api.per_page}&filter[meta_query][0][key]=ciudad&filter[meta_query][0][value]=${city}`;
     try {
       const citiesDealer = await axios.get(citiesDealerUrl);
-      agent.add(`Las Agencias disponibles en ${city} son: `);
-      citiesDealer.data.map(dealer => {
-        agent.add(new Suggestion(dealer.title.rendered));
-      });
-
-      // if (ciudades.includes(agent.parameters.ciudad)) {
-      // 	agent.add(`Genial, te puedo ayudar a encontrar charlas o talleres en ${agent.parameters.ciudad} o eventos en línea.
-      // 			¿Por cuál te gustaría empezar?`);
-      // 	agent.add(new Suggestion('Talleres'));
-      // 	agent.add(new Suggestion('Live'));
-      // } else {
-      // 	agent.add(`Oh! aun no hay eventos en tu ciudad, pero el próximo Platzi Live es el día ${proxEvento.dia}
-      // 		a la ${proxEvento.hora} sobre ${proxEvento.tema}`);
-      // }
-
+      const dealerByCity = citiesDealer.data.map(dealer => dealer.title.rendered);
+      agent.add(`Las Agencias disponibles en ${city} son: ${dealerByCity.join(', ')}`);
+      agent.add(`En qué sector de la ciudad de ${city} prefieres asistir?, elige entre ${sectores.join(', ')}`);
     } catch (error) {
       console.log('-------------- CATCH ------------');
       console.error(error);
       console.log('--------------------------');
+    }
+  }
+
+  function obtenerSector(agent) {
+    const {parameters} = agent;
+		const sector = parameters.sector.toLowerCase();
+    if (sectores.includes(sector)) {
+      agent.add(`Genial, te puedo ayudar a encontrar charlas o talleres en el ${sector} o eventos en línea.
+          ¿Por cuál te gustaría empezar?`);
+      agent.add(new Suggestion('Talleres'));
+      agent.add(new Suggestion('Live'));
+    } else {
+      agent.add(`Oh! aun no hay eventos en tu ciudad, pero el próximo Platzi Live es el día ${proxEvento.dia}
+        a la ${proxEvento.hora} sobre ${proxEvento.tema}`);
     }
   }
 
@@ -110,6 +112,7 @@ router.post('/', (request, response) => {
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Obtener Ciudad', obtenerCiudad);
+  intentMap.set('Obtener Sector', obtenerSector);
 	intentMap.set('Live', detallePlatziLive);
 	intentMap.set('Taller', seleccionTematica);
 	intentMap.set('Seleccion Taller', detalleTaller);
