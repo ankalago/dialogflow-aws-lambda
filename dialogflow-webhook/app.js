@@ -19,6 +19,7 @@ router.use(awsServerlessExpressMiddleware.eventContext());
 
 router.post('/', (request, response) => {
   const ciudades = [ 'Quito', 'Cuenca', 'Ambato' ];
+  const actions = ['Agendamiento de Cita', 'Busqueda de Concesionario en tu ciudad'];
   const tematicas = [ 'Inteligencia Artificial', 'React', 'Firebase' ];
   const proxEvento = {
     dia: '20 de Febrero',
@@ -39,12 +40,33 @@ router.post('/', (request, response) => {
       version: 'wp-json/wp/v2',
       per_page: '100'
   };
+  const users = [
+    {
+      "name": "Paul Jacome",
+      "identification": 1716724768,
+      "vin": "8L4EF3A51EC000263",
+      "email": "ankalago@gmail.com",
+      "cellphone": "0998342013",
+    },
+    {
+      "name": "Cristina Cordova",
+      "identification": 1715352512,
+      "vin": "8L4ED2A3XJC002344",
+      "email": "huaynakilla@gmail.com",
+      "cellphone": "0987877498",
+    }
+  ];
 
   const agent = new WebhookClient({ request, response });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
 
-  async function obtenerCiudad(agent) {
+  function welcome(agent) {
+    agent.add(`Hola!, soy Ambi. Bienvenido a Ambacar, puedo ayudarte con: ${actions.join(', ')}`);
+    actions.forEach(action => agent.add(new Suggestion(action)));
+  }
+
+  async function getCity(agent) {
     const {parameters} = agent;
 		const city = parameters.ciudad;
     const citiesDealerUrl = `${domain.prod}/${api.version}/concesionario?per_page=${api.per_page}&filter[meta_query][0][key]=ciudad&filter[meta_query][0][value]=${city}`;
@@ -60,7 +82,7 @@ router.post('/', (request, response) => {
     }
   }
 
-  function obtenerSector(agent) {
+  function getSector(agent) {
     const {parameters} = agent;
 		const sector = parameters.sector.toLowerCase();
     if (sectores.includes(sector)) {
@@ -111,8 +133,9 @@ router.post('/', (request, response) => {
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
-  intentMap.set('Obtener Ciudad', obtenerCiudad);
-  intentMap.set('Obtener Sector', obtenerSector);
+  intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('Obtener Ciudad', getCity);
+  intentMap.set('Obtener Sector', getSector);
 	intentMap.set('Live', detallePlatziLive);
 	intentMap.set('Taller', seleccionTematica);
 	intentMap.set('Seleccion Taller', detalleTaller);
