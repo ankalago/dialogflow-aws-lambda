@@ -66,6 +66,27 @@ router.post('/', (request, response) => {
     actions.forEach(action => agent.add(new Suggestion(action)));
   }
 
+  function getAppointment(agent) {
+    agent.add('Excelente, ahora me puedes ayudar con tu cédula:');
+  }
+
+  function getIdentification(agent) {
+    const {parameters} = agent;
+		const identification = parameters.number.join('');
+    agent.add(`tu cedula es: ${identification}?`);
+  }
+
+  function getIdentificationYes(agent) {
+    const {parameters} = agent;
+    const identification = parameters.number.join('');
+    const user = users.find(user => user.identification == identification);
+    agent.add(`Hola ${user.name} en que ciudad te encuentras?`);
+  }
+
+  function getDealer(agent) {
+    agent.add('Excelente, ahora puedes ayudarme la ciudad en la que te encuentras?');
+  }
+
   async function getCity(agent) {
     const {parameters} = agent;
 		const city = parameters.ciudad;
@@ -134,6 +155,14 @@ router.post('/', (request, response) => {
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
+  // intents cita
+  intentMap.set('Default Welcome Intent - cita', getAppointment);
+  intentMap.set('Default Welcome Intent - cita - select.number', getIdentification);
+  intentMap.set('Default Welcome Intent - cita - select.number - yes', getIdentificationYes);
+
+  // intents agencia
+  intentMap.set('Default Welcome Intent - concesionario', getDealer);
+
   intentMap.set('Obtener Ciudad', getCity);
   intentMap.set('Obtener Sector', getSector);
 	intentMap.set('Live', detallePlatziLive);
