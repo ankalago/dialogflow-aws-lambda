@@ -70,6 +70,10 @@ router.post('/', (request, response) => {
     agent.add('Excelente, ahora me puedes ayudar con tu cédula:');
   }
 
+  function getAppointmentAgain(agent) {
+    agent.add('Por favor ayudame con tu cédula:');
+  }
+
   function getIdentification(agent) {
     const {parameters} = agent;
 		const identification = parameters.number.join('');
@@ -158,7 +162,10 @@ router.post('/', (request, response) => {
   // intents cita
   intentMap.set('Default Welcome Intent - cita', getAppointment);
   intentMap.set('Default Welcome Intent - cita - select.number', getIdentification);
+  // intents cita yes
   intentMap.set('Default Welcome Intent - cita - select.number - yes', getIdentificationYes);
+  //intents cita no
+  intentMap.set('Default Welcome Intent - cita - select.number - no', getAppointmentAgain);
 
   // intents agencia
   intentMap.set('Default Welcome Intent - concesionario', getDealer);
