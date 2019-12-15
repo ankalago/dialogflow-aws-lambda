@@ -19,7 +19,7 @@ router.use(awsServerlessExpressMiddleware.eventContext());
 
 router.post('/', (request, response) => {
   const ciudades = [ 'Quito', 'Cuenca', 'Ambato' ];
-  const actions = ['Agendamiento de Cita', 'Busqueda de Concesionario en tu ciudad'];
+  const actions = ['Agendamiento de Cita', 'Busqueda de Concesionario'];
   const tematicas = [ 'Inteligencia Artificial', 'React', 'Firebase' ];
   const proxEvento = {
     dia: '20 de Febrero',
