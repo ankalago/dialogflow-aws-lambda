@@ -98,13 +98,32 @@ router.post('/', (request, response) => {
     try {
       const citiesDealer = await axios.get(citiesDealerUrl);
       const dealerByCity = citiesDealer.data.map(dealer => dealer.title.rendered);
-      agent.add(`Las Agencias disponibles en ${city} son: ${dealerByCity.join(', ')}`);
-      agent.add(`En qué sector de la ciudad de ${city} prefieres asistir?, elige entre ${sectores.join(', ')}`);
+      if(dealerByCity.length) {
+        agent.add(`Las Agencias disponibles en ${city} son: ${dealerByCity.join(', ')}`);
+        // agent.add(`En qué sector de la ciudad de ${city} prefieres asistir?, elige entre ${sectores.join(', ')}`);
+      } else {
+        agent.add(`No existen agencias en ${city}, elige otra ciudad`);
+      }
     } catch (error) {
       console.log('-------------- CATCH ------------');
       console.error(error);
       console.log('--------------------------');
     }
+  }
+
+  function getAgency(agent) {
+    const {parameters} = agent;
+		const agency = parameters.agency;
+    agent.add(`Genial, Aquí tienes la ubicación de la agencia`);
+    agent.add(
+			new Card({
+				title: `Agencia ${agency}`,
+				imageUrl: 'https://ibb.co/yqqHsfC',
+				text: 'Av. Granados y Eloy Alfaro Esquina Telf: (02) 334-4011 / (02) 334-4039 / (02) 334-3788',
+				buttonText: 'Como llegar',
+				buttonUrl: 'https://maps.google.com'
+			})
+		);
   }
 
   function getSector(agent) {
@@ -169,9 +188,9 @@ router.post('/', (request, response) => {
 
   // intents agencia
   intentMap.set('Default Welcome Intent - concesionario', getDealer);
+  intentMap.set('Obtener Agencia', getAgency);
 
   intentMap.set('Obtener Ciudad', getCity);
-  intentMap.set('Obtener Sector', getSector);
 	intentMap.set('Live', detallePlatziLive);
 	intentMap.set('Taller', seleccionTematica);
 	intentMap.set('Seleccion Taller', detalleTaller);
