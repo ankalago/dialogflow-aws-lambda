@@ -118,7 +118,7 @@ router.post('/', (request, response) => {
     agent.add(
 			new Card({
 				title: `Agencia ${agency}`,
-				imageUrl: 'https://ibb.co/yqqHsfC',
+				imageUrl: 'https://i.ibb.co/XttcJ2P/Screen-Shot-2019-12-15-at-11-29-35-PM.png',
 				text: 'Av. Granados y Eloy Alfaro Esquina Telf: (02) 334-4011 / (02) 334-4039 / (02) 334-3788',
 				buttonText: 'Como llegar',
 				buttonUrl: 'https://maps.google.com'
