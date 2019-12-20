@@ -18,6 +18,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(awsServerlessExpressMiddleware.eventContext());
 
 router.post('/', (request, response) => {
+  const keyStaticGmap = 'AIzaSyByD-OWfjKQwcnWiOED4uVNYCe2Voiyw5U';
   const ciudades = [ 'Quito', 'Cuenca', 'Ambato' ];
   const actions = ['Agendamiento de Cita', 'Busqueda de Concesionario'];
   const tematicas = [ 'Inteligencia Artificial', 'React', 'Firebase' ];
@@ -91,19 +92,11 @@ router.post('/', (request, response) => {
     agent.add('Excelente, ahora puedes ayudarme la ciudad en la que te encuentras?');
   }
 
-  async function getCity(agent) {
-    const {parameters} = agent;
-		const city = parameters.ciudad;
+  async function getDealFromApi (city) {
     const citiesDealerUrl = `${domain.prod}/${api.version}/concesionario?per_page=${api.per_page}&filter[meta_query][0][key]=ciudad&filter[meta_query][0][value]=${city}`;
     try {
       const citiesDealer = await axios.get(citiesDealerUrl);
-      const dealerByCity = citiesDealer.data.map(dealer => dealer.title.rendered);
-      if(dealerByCity.length) {
-        agent.add(`Las Agencias disponibles en ${city} son: ${dealerByCity.join(', ')}`);
-        // agent.add(`En qué sector de la ciudad de ${city} prefieres asistir?, elige entre ${sectores.join(', ')}`);
-      } else {
-        agent.add(`No existen agencias en ${city}, elige otra ciudad`);
-      }
+      return citiesDealer.data;
     } catch (error) {
       console.log('-------------- CATCH ------------');
       console.error(error);
@@ -111,17 +104,37 @@ router.post('/', (request, response) => {
     }
   }
 
-  function getAgency(agent) {
+  async function getCity(agent) {
     const {parameters} = agent;
-		const agency = parameters.agency;
+		const city = parameters.ciudad;
+    const dataFromApi = await getDealFromApi(city);
+    const dealerByCity = dataFromApi.map(dealer => dealer.title.rendered);
+    if(dealerByCity.length) {
+      agent.add(`Las Agencias disponibles en ${city} son: ${dealerByCity.join(', ')}`);
+      // agent.add(`En qué sector de la ciudad de ${city} prefieres asistir?, elige entre ${sectores.join(', ')}`);
+    } else {
+      agent.add(`No existen agencias en ${city}, elige otra ciudad`);
+    }
+  }
+
+  async function getAgency(agent) {
+    const {parameters} = agent;
+    const agency = parameters.agencia;
+    const city = parameters.ciudad;
+    const dealerByCity = await getDealFromApi(city);
+    const agencyDealer = dealerByCity.length ? dealerByCity.find(dealer => dealer.title.rendered.toLowerCase().includes(agency.toLowerCase())) : [];
+    const dealerName = agencyDealer.title.rendered;
+    const coordenates = agencyDealer.acf.mapa;
+    const address = agencyDealer.acf.direccion;
+    const telephones = agencyDealer.acf.telefono.map(telephone => `${telephone.codigo_region} ${telephone.numero_de_telefono}`);
     agent.add(`Genial, Aquí tienes la ubicación de la agencia`);
     agent.add(
 			new Card({
-				title: `Agencia ${agency}`,
-				imageUrl: 'https://i.ibb.co/Wpt6H4W/staticmap-googlemaps-ambacar-granados.png',
-				text: 'Av. Granados y Eloy Alfaro Esquina Telf: (02) 334-4011 / (02) 334-4039 / (02) 334-3788',
+				title: dealerName,
+				imageUrl: `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${dealerName}|${coordenates}&key=${keyStaticGmap}`,
+				text: `${address} - ${telephones.join(', ')}`,
 				buttonText: 'Como llegar',
-				buttonUrl: 'https://maps.google.com'
+				buttonUrl: `https://www.google.com/maps/dir/?api=1&destination=${dealerName}`
 			})
 		);
   }
