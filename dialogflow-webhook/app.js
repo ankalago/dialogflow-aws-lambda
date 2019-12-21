@@ -129,10 +129,11 @@ router.post('/', (request, response) => {
     const telephones = agencyDealer.acf.telefono.map(telephone => `${telephone.codigo_region} ${telephone.numero_de_telefono}`);
     const nameAgencyGMap = "ambacar granados";
     agent.add(`Genial, Aquí tienes la ubicación de la agencia`);
+    // `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${nameAgencyGMap}|${coordenates}&key=${keyStaticGmap}`,
     agent.add(
 			new Card({
-				title: nameAgencyGMap,
-				imageUrl: `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${nameAgencyGMap}|${coordenates}&key=${keyStaticGmap}`,
+        title: nameAgencyGMap,
+				imageUrl: 'https://i.ibb.co/SQFT0MF/staticmap-ambacar-granados.png',
 				text: `${address} - ${telephones.join(', ')}`,
 				buttonText: 'Como llegar',
 				buttonUrl: `https://www.google.com/maps/dir/?api=1&destination=${nameAgencyGMap}`
