@@ -117,6 +117,10 @@ router.post('/', (request, response) => {
     }
   }
 
+  async function getImageMapAgengy (name, position, key) {
+    return await `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${name}|${position}&key=${key}`
+  }
+
   async function getAgency(agent) {
     const {parameters} = agent;
     const agency = parameters.agencia;
@@ -128,12 +132,13 @@ router.post('/', (request, response) => {
     const address = agencyDealer.acf.direccion;
     const telephones = agencyDealer.acf.telefono.map(telephone => `${telephone.codigo_region} ${telephone.numero_de_telefono}`);
     const nameAgencyGMap = "ambacar granados";
+    const imageMapDealer = await getImageMapAgengy(dealerName, coordenates, keyStaticGmap);
     agent.add(`Genial, Aquí tienes la ubicación de la agencia`);
     // `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${nameAgencyGMap}|${coordenates}&key=${keyStaticGmap}`,
     agent.add(
 			new Card({
         title: nameAgencyGMap,
-				imageUrl: 'https://i.ibb.co/SQFT0MF/staticmap-ambacar-granados.png',
+				imageUrl: imageMapDealer,
 				text: `${address} - ${telephones.join(', ')}`,
 				buttonText: 'Como llegar',
 				buttonUrl: `https://www.google.com/maps/dir/?api=1&destination=${nameAgencyGMap}`
