@@ -180,19 +180,6 @@ router.post('/', (request, response) => {
     }
   }
 
-  function detallePlatziLive(agent) {
-		agent.add(`el próximo Platzi Live es el día ${proxEvento.dia} 
-			a la ${proxEvento.hora} sobre ${proxEvento.tema}`);
-  }
-
-  function seleccionTematica(agent) {
-		agent.add(`Super a mi también me encantan los retos. Estos son los temas que se van a cubrir proximamente en
-				tu ciudad ${tematicas.join(', ')}. ¿Cuál temática te gustaría?`);
-		agent.add(new Suggestion(tematicas[0]));
-		agent.add(new Suggestion(tematicas[1]));
-		agent.add(new Suggestion(tematicas[2]));
-	}
-
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
@@ -214,8 +201,6 @@ router.post('/', (request, response) => {
   intentMap.set('Reservation time - yes', confirmationReservation);
 
   intentMap.set('Obtener Ciudad', getCity);
-	intentMap.set('Live', detallePlatziLive);
-	intentMap.set('Taller', seleccionTematica);
   agent.handleRequest(intentMap);
 });
 
