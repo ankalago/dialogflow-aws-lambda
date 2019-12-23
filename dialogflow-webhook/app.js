@@ -122,7 +122,10 @@ router.post('/', (request, response) => {
   }
 
   async function getAgency(agent) {
-    const {parameters} = agent;
+    console.log('------------------------');
+    console.log(agent);
+    console.log('------------------------');
+    const {parameters, intent} = agent;
     const agency = parameters.agencia;
     const city = parameters.ciudad;
     const dealerByCity = await getDealFromApi(city);
@@ -143,7 +146,24 @@ router.post('/', (request, response) => {
 				buttonText: 'Como llegar',
 				buttonUrl: `https://www.google.com/maps/dir/?api=1&destination=${nameAgencyGMap}`
 			})
-		);
+    );
+    intent === 'Obtener Agencia - cita' && agent.add(`Atendemos de lunes a viernes, que día te gustaria agendar?`);
+  }
+
+  function setReservationDate() {
+    const {parameters} = agent;
+    const date = parameters.date;
+    const time = parameters.time;
+    date && agent.add(`Excelente, el ${date} a que hora deseas la cita?`);
+    date && time && agent.add(`Excelente, se reservará una cita el ${date} a las ${time}, deseas continuar con la reservación?`);
+  }
+
+  function confirmationReservation() {
+    const {parameters} = agent;
+    const date = parameters.date;
+    const time = parameters.time;
+    agent.add(`Tu cita ha sido reservada. Desea sque haga haga mas por tí, puedes elegir entre: ${actions.join(', ')}`);
+    actions.forEach(action => agent.add(new Suggestion(action)));
   }
 
   function getSector(agent) {
@@ -187,6 +207,11 @@ router.post('/', (request, response) => {
   // intents agencia
   intentMap.set('Default Welcome Intent - concesionario', getDealer);
   intentMap.set('Obtener Agencia', getAgency);
+  intentMap.set('Obtener Agencia - cita', getAgency);
+  intentMap.set('Reservation date', setReservationDate);
+  intentMap.set('Reservation time', setReservationDate);
+  intentMap.set('Reservation date - yes', confirmationReservation);
+  intentMap.set('Reservation time - yes', confirmationReservation);
 
   intentMap.set('Obtener Ciudad', getCity);
 	intentMap.set('Live', detallePlatziLive);
