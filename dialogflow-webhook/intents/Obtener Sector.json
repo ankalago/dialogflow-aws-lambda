@@ -1,0 +1,161 @@
+{
+  "id": "7ae14927-d6be-49ff-9fae-eb01bf94e8db",
+  "name": "Obtener Sector",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "ed8c79d1-79e5-4ce7-8d03-cf85162dc5e8",
+          "required": false,
+          "dataType": "@Sectores",
+          "name": "sector",
+          "value": "$sector",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "userSays": [
+    {
+      "id": "ce0ab22a-7219-4ffd-b735-ddb42219cb7d",
+      "data": [
+        {
+          "text": "en el ",
+          "userDefined": false
+        },
+        {
+          "text": "valle",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        },
+        {
+          "text": " de ",
+          "userDefined": false
+        },
+        {
+          "text": "tumbaco",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "7a86acdc-dd50-4ec2-aee6-0443501ae8aa",
+      "data": [
+        {
+          "text": "en los ",
+          "userDefined": false
+        },
+        {
+          "text": "chillos",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "43351743-16a2-45cf-9c40-220ff31a1c89",
+      "data": [
+        {
+          "text": "valles",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "20510560-d316-4b7d-a2ad-1d5939f3a46a",
+      "data": [
+        {
+          "text": "centro",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "6a0d78f4-4f0d-474d-9f24-e6580fec1981",
+      "data": [
+        {
+          "text": "sur",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "8bfebe83-b858-41bb-be3a-b592c4aa6dbc",
+      "data": [
+        {
+          "text": "en el ",
+          "userDefined": false
+        },
+        {
+          "text": "Norte",
+          "alias": "sector",
+          "meta": "@Sectores",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    }
+  ],
+  "followUpIntents": [],
+  "liveAgentHandoff": false,
+  "endInteraction": false,
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "templates": []
+}

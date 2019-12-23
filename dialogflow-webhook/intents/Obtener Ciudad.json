@@ -1,0 +1,310 @@
+{
+  "id": "6e1f22f3-2518-47e8-8e2b-a5799f3940e4",
+  "name": "Obtener Ciudad",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "054e4324-6c18-4902-a882-b42a8b0902f5",
+          "required": false,
+          "dataType": "@sys.geo-city",
+          "name": "ciudad",
+          "value": "$ciudad",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "userSays": [
+    {
+      "id": "b745bf04-934c-490e-a99b-2dec44cd91d3",
+      "data": [
+        {
+          "text": "Quito",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "214f340b-d985-48dd-a2d7-099e645f010e",
+      "data": [
+        {
+          "text": "Esmeraldas",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "9d7034e8-ae3e-44d3-b01c-86d7469586be",
+      "data": [
+        {
+          "text": "Ibarra",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "3cec1b08-2412-41a2-a999-7db28164f354",
+      "data": [
+        {
+          "text": "Loja",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "65208acb-3fd7-423f-90e0-79bd982c496e",
+      "data": [
+        {
+          "text": "Machala",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "419ff6e7-f95b-4cd3-931c-a50e1e8eda0d",
+      "data": [
+        {
+          "text": "Manta",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "c8f35b36-e139-4203-af44-1fcccace533d",
+      "data": [
+        {
+          "text": "Quevedo",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "bd4c5903-e09f-4da9-a251-693887cc5b05",
+      "data": [
+        {
+          "text": "Santo Domingo",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "eab64a39-3322-4973-b90a-30e5ad35d0a9",
+      "data": [
+        {
+          "text": "Chone",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "ec42a6b5-b6c0-4300-92b3-47e0f902aed4",
+      "data": [
+        {
+          "text": "Puyo",
+          "alias": "ciudad",
+          "meta": "@sys.geo-city",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "74e803fd-8f17-4dc4-b824-d1e82e5afefe",
+      "data": [
+        {
+          "text": "Salinas",
+          "meta": "@sys.ignore",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "e7804c27-e1e6-4806-bade-1bcde3fd6e1d",
+      "data": [
+        {
+          "text": "Latacunga",
+          "meta": "@sys.ignore",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "93c128b6-53b0-462a-93a8-28d1584222e1",
+      "data": [
+        {
+          "text": "Riobamba",
+          "meta": "@sys.ignore",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "51360503-0907-47f6-8361-33a5f33e5827",
+      "data": [
+        {
+          "text": "Tena",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "323141a7-3692-4774-bb7a-062c7eccf036",
+      "data": [
+        {
+          "text": "Los Bancos",
+          "meta": "@sys.ignore",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "da2815e8-b196-4aee-a8d6-7d63857f7699",
+      "data": [
+        {
+          "text": "Portoviejo",
+          "meta": "@sys.ignore",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "9ee6e4d5-4e59-4038-b5fd-16ebbd7733d2",
+      "data": [
+        {
+          "text": "Guayaquil",
+          "meta": "@sys.ignore",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "3489025c-d0eb-4a20-a7ea-f370df3d2e24",
+      "data": [
+        {
+          "text": "Ambato",
+          "meta": "@sys.ignore",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 1,
+      "updated": 0,
+      "isAuto": false
+    }
+  ],
+  "followUpIntents": [],
+  "liveAgentHandoff": false,
+  "endInteraction": false,
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "templates": []
+}

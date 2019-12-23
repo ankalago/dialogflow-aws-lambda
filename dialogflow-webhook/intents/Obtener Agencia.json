@@ -1,0 +1,100 @@
+{
+  "id": "ceb7148f-e16c-4711-af88-7116bdeca9e0",
+  "name": "Obtener Agencia",
+  "auto": true,
+  "contexts": [
+    "DefaultWelcomeIntent-concesionario-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [
+        {
+          "name": "DefaultWelcomeIntent-concesionario-followup",
+          "parameters": {},
+          "lifespan": 5
+        }
+      ],
+      "parameters": [
+        {
+          "id": "9198102a-c857-406f-a378-cc3a6fc463e6",
+          "required": false,
+          "dataType": "@Agencias",
+          "name": "agencia",
+          "value": "$agencia",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        },
+        {
+          "id": "9730a74d-0f9a-4582-b812-d31af93f7b5a",
+          "required": false,
+          "dataType": "@sys.geo-city",
+          "name": "ciudad",
+          "value": "$ciudad",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "defaultValue": "#DefaultWelcomeIntent-concesionario-followup.ciudad",
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "userSays": [
+    {
+      "id": "a4c32073-7948-4122-911f-5714b1538e9e",
+      "data": [
+        {
+          "text": "shyris",
+          "alias": "agencia",
+          "meta": "@Agencias",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "046c6636-5b2f-443e-a024-a1534336c408",
+      "data": [
+        {
+          "text": "granados",
+          "alias": "agencia",
+          "meta": "@Agencias",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    }
+  ],
+  "followUpIntents": [],
+  "liveAgentHandoff": false,
+  "endInteraction": false,
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "templates": []
+}

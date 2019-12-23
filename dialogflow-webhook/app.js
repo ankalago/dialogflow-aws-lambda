@@ -173,28 +173,6 @@ router.post('/', (request, response) => {
 		agent.add(new Suggestion(tematicas[2]));
 	}
 
-	function detalleTaller(agent) {
-		agent.add(
-			`El sabado 26 de octubre, tenemos un taller sobre React Js en Ruta N, a las 7:00 pm. ¿Te gustaría asistir?`
-		);
-		agent.add(new Suggestion(booleanOptions.yes));
-		agent.add(new Suggestion(booleanOptions.no));
-	}
-
-	function registroTaller(agent) {
-		agent.add(`OK, solo falta un detalle: debes registrarte en la plataforma Meetup. ¿Te gustaría explorar
-				algo más?. Solo dí: Quiero información de otra plática o taller o evento en línea`);
-		agent.add(
-			new Card({
-				title: 'Registro en Meetup',
-				imageUrl: 'https://secure.meetupstatic.com/s/img/786824251364989575000/logo/swarm/m_swarm_630x630.png',
-				text: 'Registrate en Meetup :)',
-				buttonText: 'Registrarme',
-				buttonUrl: 'https://secure.meetup.com/es/register/'
-			})
-		);
-	}
-
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
@@ -213,8 +191,6 @@ router.post('/', (request, response) => {
   intentMap.set('Obtener Ciudad', getCity);
 	intentMap.set('Live', detallePlatziLive);
 	intentMap.set('Taller', seleccionTematica);
-	intentMap.set('Seleccion Taller', detalleTaller);
-	intentMap.set('Seleccion Taller - yes', registroTaller);
   agent.handleRequest(intentMap);
 });
 

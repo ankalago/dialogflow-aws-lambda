@@ -1,0 +1,83 @@
+{
+  "id": "1fac141d-d2a6-4e6b-bd25-48eb72958349",
+  "name": "Live",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "eae3de8e-a242-4953-bd48-4cb66557a802",
+          "required": false,
+          "dataType": "@Eventos",
+          "name": "Eventos",
+          "value": "$Eventos",
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": [],
+          "isList": false
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "userSays": [
+    {
+      "id": "c07fe580-ca14-40e3-9e39-2ae790e3198c",
+      "data": [
+        {
+          "text": "en ",
+          "userDefined": false
+        },
+        {
+          "text": "linea",
+          "alias": "Eventos",
+          "meta": "@Eventos",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0,
+      "updated": 0,
+      "isAuto": false
+    },
+    {
+      "id": "986d339a-cbc8-43f5-af65-30db5cb736d1",
+      "data": [
+        {
+          "text": "evento en linea",
+          "alias": "Eventos",
+          "meta": "@Eventos",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 1,
+      "updated": 0,
+      "isAuto": false
+    }
+  ],
+  "followUpIntents": [],
+  "liveAgentHandoff": false,
+  "endInteraction": false,
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "templates": []
+}
