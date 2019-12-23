@@ -57,6 +57,8 @@ router.post('/', (request, response) => {
       "cellphone": "0987877498",
     }
   ];
+  const timeZone = 'America/Guayaquil';
+  const timeZoneOffset = '-05:00';
 
   const agent = new WebhookClient({ request, response });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
@@ -122,9 +124,6 @@ router.post('/', (request, response) => {
   }
 
   async function getAgency(agent) {
-    console.log('------------------------');
-    console.log(agent);
-    console.log('------------------------');
     const {parameters, intent} = agent;
     const agency = parameters.agencia;
     const city = parameters.ciudad;
@@ -154,15 +153,26 @@ router.post('/', (request, response) => {
     const {parameters} = agent;
     const date = parameters.date;
     const time = parameters.time;
-    date && agent.add(`Excelente, el ${date} a que hora deseas la cita?`);
-    date && time && agent.add(`Excelente, se reservará una cita el ${date} a las ${time}, deseas continuar con la reservación?`);
+    const formatDate = new Date(Date.parse(`${date ? date.split('T')[0] : ''}T${time ? time.split('T')[1].split('-')[0] : ''}${timeZoneOffset}`));
+    console.log('-------------');
+    console.log(formatDate);
+    console.log('-------------');
+    const formatDateString = formatDate.toLocaleString(
+      'es-EC',
+      { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+    );
+    if (date) {
+      agent.add(`Excelente, el ${formatDateString} a que hora deseas la cita?`);
+    } else if(date && time) {
+      agent.add(`Excelente, se reservará una cita el ${formatDateString} a las ${time}, deseas continuar con la reservación?`);
+    }
   }
 
   function confirmationReservation() {
     const {parameters} = agent;
     const date = parameters.date;
     const time = parameters.time;
-    agent.add(`Tu cita ha sido reservada. Desea sque haga haga mas por tí, puedes elegir entre: ${actions.join(', ')}`);
+    agent.add(`Tu cita ha sido reservada. Deseas que haga haga mas por tí, puedes elegir entre: ${actions.join(', ')}`);
     actions.forEach(action => agent.add(new Suggestion(action)));
   }
 
