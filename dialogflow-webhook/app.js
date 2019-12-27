@@ -59,6 +59,10 @@ router.post('/', (request, response) => {
   ];
   const timeZone = 'America/Guayaquil';
   const timeZoneOffset = '-05:00';
+  const dateTimeNow = new Date().toISOString();
+  const dateNow = dateTimeNow.split("T")[0].slice(0, 10);
+  const timeNow = dateTimeNow.split("T")[1].slice(0, 8);
+  const locales = 'es-EC';
 
   const agent = new WebhookClient({ request, response });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
@@ -151,20 +155,32 @@ router.post('/', (request, response) => {
 
   function setReservationDate() {
     const {parameters} = agent;
-    const date = parameters.date;
-    const time = parameters.time;
-    const formatDate = new Date(Date.parse(`${date ? date.split('T')[0] : ''}T${time ? time.split('T')[1].split('-')[0] : ''}${timeZoneOffset}`));
-    console.log('-------------');
-    console.log(formatDate);
-    console.log('-------------');
-    const formatDateString = formatDate.toLocaleString(
-      'es-EC',
-      { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+    const dateInput = parameters.date;
+    const timeInput = parameters.time;
+    const date = !!dateInput ? dateInput : "";
+    const time = !!timeInput ? timeInput : `${dateNow}T${timeNow}${timeZoneOffset}`;
+    const formatDateTime = new Date(
+      Date.parse(
+        `${date.split("T")[0]}T${time.split("T")[1].split("-")[0]}${timeZoneOffset}`
+      )
     );
-    if (date) {
+    const formatDateString = formatDateTime.toLocaleString(locales, {
+      month: "long",
+      day: "numeric",
+      timeZone: timeZone
+    });
+    const formatTimeString = formatDateTime.toLocaleString(locales, {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: timeZone
+    });
+    console.log('-----------------------');
+    console.log(formatDateString);
+    console.log('-----------------------');
+    if (!!dateInput && !!!timeInput) {
       agent.add(`Excelente, el ${formatDateString} a que hora deseas la cita?`);
-    } else if(date && time) {
-      agent.add(`Excelente, se reservará una cita el ${formatDateString} a las ${time}, deseas continuar con la reservación?`);
+    } else if(!!dateInput && !!timeInput) {
+      agent.add(`Excelente, se reservará una cita el ${formatDateString} a las ${formatTimeString}, deseas continuar con la reservación?`);
     }
   }
 
