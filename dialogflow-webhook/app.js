@@ -111,7 +111,7 @@ router.post('/', (request, response) => {
   }
 
   async function postReservation (identification, date, time) {
-    const url = 'https://hooks.slack.com/services/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';
+    const url = 'https://hooks.slack.com/services/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';
     const data = {
       "text": "Se ha creado una cita desde el asistente con los siguientes datos:",
       "blocks": [
