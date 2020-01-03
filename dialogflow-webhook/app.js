@@ -110,6 +110,51 @@ router.post('/', (request, response) => {
     }
   }
 
+  async function postReservation (identification, date, time) {
+    const url = 'https://hooks.slack.com/services/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';
+    const data = {
+      "text": "Se ha creado una cita desde el asistente con los siguientes datos:",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "*Se ha creado una cita desde el asistente con los siguientes datos:*"
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": `*Identificación:* ${identification}`
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": `*Fecha:* ${date}`
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": `*Hora:* ${time}`
+          }
+        }
+      ]
+    };
+    try {
+      const postData = await axios.post(url, data);
+      return postData.data;
+    } catch (error) {
+      console.log('-------------- CATCH ------------');
+      console.error(error);
+      console.log('--------------------------');
+    }
+  }
+
   async function getCity(agent) {
     const {parameters} = agent;
 		const city = parameters.ciudad;
@@ -191,13 +236,15 @@ router.post('/', (request, response) => {
     }
   }
 
-  function confirmationReservation() {
+  async function confirmationReservation() {
     const {parameters} = agent;
+    const identification = parameters.number;
     const dateInput = parameters.date;
     const timeInput = parameters.time;
     const dateTime = formatDateTime(dateInput, timeInput, locales, timeZone);
     const formatDateString = dateTime.formatDate;
     const formatTimeString = dateTime.formatTime;
+    await postReservation(identification, formatDateString, formatTimeString);
     agent.add(`Tu cita ha sido reservada. Te esperamos el ${formatDateString} a las ${formatTimeString}`);
   }
 
