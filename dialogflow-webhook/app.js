@@ -124,7 +124,31 @@ router.post('/', (request, response) => {
   }
 
   async function getImageMapAgency (name, position, key) {
-    return await `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${name}|${position}&key=${key}`
+    return `https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=600x400&maptype=roadmap&markers=color:red|label:${name}|${position}&key=${key}`;
+  }
+
+  function formatDateTime (dateInput, timeInput, locales, timeZone) {
+    const date = !!dateInput ? dateInput : "";
+    const time = !!timeInput ? timeInput : `${dateNow}T${timeNow}${timeZoneOffset}`;
+    const formatDateTime = new Date(
+        Date.parse(
+            `${date.split("T")[0]}T${time.split("T")[1].split("-")[0]}${timeZoneOffset}`
+        )
+    );
+    const formatDateString = formatDateTime.toLocaleString(locales, {
+      month: "long",
+      day: "numeric",
+      timeZone: timeZone
+    });
+    const formatTimeString = formatDateTime.toLocaleString(locales, {
+      hour: "numeric",
+      minute: "numeric",
+      timeZone: timeZone
+    });
+    return {
+      formatDate: formatDateString,
+      formatTime: formatTimeString
+    };
   }
 
   async function getAgency(agent) {
@@ -157,23 +181,9 @@ router.post('/', (request, response) => {
     const {parameters} = agent;
     const dateInput = parameters.date;
     const timeInput = parameters.time;
-    const date = !!dateInput ? dateInput : "";
-    const time = !!timeInput ? timeInput : `${dateNow}T${timeNow}${timeZoneOffset}`;
-    const formatDateTime = new Date(
-      Date.parse(
-        `${date.split("T")[0]}T${time.split("T")[1].split("-")[0]}${timeZoneOffset}`
-      )
-    );
-    const formatDateString = formatDateTime.toLocaleString(locales, {
-      month: "long",
-      day: "numeric",
-      timeZone: timeZone
-    });
-    const formatTimeString = formatDateTime.toLocaleString(locales, {
-      hour: "numeric",
-      minute: "numeric",
-      timeZone: timeZone
-    });
+    const dateTime = formatDateTime(dateInput, timeInput, locales, timeZone);
+    const formatDateString = dateTime.formatDate;
+    const formatTimeString = dateTime.formatTime;
     if (!!dateInput && !!!timeInput) {
       agent.add(`Excelente, el ${formatDateString} a que hora deseas la cita?`);
     } else if(!!dateInput && !!timeInput) {
@@ -183,24 +193,12 @@ router.post('/', (request, response) => {
 
   function confirmationReservation() {
     const {parameters} = agent;
-    const date = parameters.date;
-    const time = parameters.time;
-    agent.add(`Tu cita ha sido reservada. Deseas que haga haga mas por tí, puedes elegir entre: ${actions.join(', ')}`);
-    actions.forEach(action => agent.add(new Suggestion(action)));
-  }
-
-  function getSector(agent) {
-    const {parameters} = agent;
-		const sector = parameters.sector.toLowerCase();
-    if (sectores.includes(sector)) {
-      agent.add(`Genial, te puedo ayudar a encontrar charlas o talleres en el ${sector} o eventos en línea.
-          ¿Por cuál te gustaría empezar?`);
-      agent.add(new Suggestion('Talleres'));
-      agent.add(new Suggestion('Live'));
-    } else {
-      agent.add(`Oh! aun no hay eventos en tu ciudad, pero el próximo Platzi Live es el día ${proxEvento.dia}
-        a la ${proxEvento.hora} sobre ${proxEvento.tema}`);
-    }
+    const dateInput = parameters.date;
+    const timeInput = parameters.time;
+    const dateTime = formatDateTime(dateInput, timeInput, locales, timeZone);
+    const formatDateString = dateTime.formatDate;
+    const formatTimeString = dateTime.formatTime;
+    agent.add(`Tu cita ha sido reservada. Te esperamos el ${formatDateString} a las ${formatTimeString}`);
   }
 
   // Run the proper function handler based on the matched Dialogflow intent name
