@@ -174,9 +174,6 @@ router.post('/', (request, response) => {
       minute: "numeric",
       timeZone: timeZone
     });
-    console.log('-----------------------');
-    console.log(formatDateString);
-    console.log('-----------------------');
     if (!!dateInput && !!!timeInput) {
       agent.add(`Excelente, el ${formatDateString} a que hora deseas la cita?`);
     } else if(!!dateInput && !!timeInput) {
